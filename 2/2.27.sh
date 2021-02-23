@@ -1,5 +1,5 @@
 #!/bin/bash
-$trash=trash
+trash=trash
 
 function abspath() {
 	from="$1"
@@ -48,6 +48,5 @@ function showt() {
 	ls "~/.$trash" | tr -_- /
 }
 
-cd
-mkdir -p "$trash"
+mkdir -p ~/".$trash"
 

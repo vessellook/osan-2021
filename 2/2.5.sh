@@ -9,7 +9,7 @@ function print_dir() {
 	done
 }
 
-if [ -n $1 ]; then start=$1; else start=.; fi
+if [ -z $1 ]; then start=$(pwd); else start=$1; fi
 
 print_dir $start
 

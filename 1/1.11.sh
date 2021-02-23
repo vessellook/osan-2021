@@ -1,13 +1,8 @@
 #!/bin/bash
 
-if command -v ncal &> /dev/null
-then
-cal=ncal
-else
-cal=cal
-fi
-
 echo Current month\'s calendar
-$cal
+cal
 echo Calendar for December
-$cal Dec
+cal Dec &> /dev/null
+if test $? ; then cal Dec; else cal -m Dec; fi
+
