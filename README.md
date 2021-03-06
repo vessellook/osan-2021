@@ -1,5 +1,5 @@
 # Описание
 Решения задач по курсу Операционные системы и сети
 
-[Лабник](https://vk.com/doc215375933_587319261?hash=16bfff63db3cfa1c61&dl=5be4276a59a6a495a1)
+[Лабник](https://drive.google.com/file/d/1FG-gH3Si6iMkcXEn1WGL4bJHeKP6ie_t/view?usp=sharing)
 [Справочник](https://tldp.org/LDP/abs/html/index.html)
