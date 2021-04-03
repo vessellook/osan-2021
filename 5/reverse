@@ -1,0 +1,12 @@
+#!/bin/bash
+# task 5.8
+
+result=
+
+for i
+do
+    result="$i\n$result"
+done
+
+echo -en "$result"
+

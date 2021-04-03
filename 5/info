@@ -1,0 +1,19 @@
+#!/bin/bash
+# task 5.9
+
+read -p "Input your name: " name
+read -p "Input your address: " address
+read -p "Input your birthday (in format dd.mm.year): " birthday
+
+day=$(echo $birthday | cut -d'.' -f1)
+month=$(echo $birthday | cut -d'.' -f2)
+year=$(echo $birthday | cut -d'.' -f3)
+
+echo Processing..
+
+sleep 3
+echo
+echo "Your name $name"
+printf "Your birthday %d/%.2d/%.2d (in format yyyy/dd/mm)\n" "$year" "$day" "$month"
+echo "Your address $address"
+

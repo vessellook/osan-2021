@@ -1,3 +1,4 @@
 #!/bin/bash
 cd
-rm -rf A/*
+find A -type d -delete
+

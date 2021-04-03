@@ -1,0 +1,9 @@
+#!/bin/bash
+# task 5.6
+
+banner Hello
+MYNAME=$(who | grep $(id -u) | cut -d' ' -f1)
+echo $MYNAME
+date
+who | cut -d' ' -f1
+

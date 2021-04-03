@@ -1,0 +1,15 @@
+#!/bin/bash
+# task 5.36
+
+[ $# -eq 0 ] && echo You need to pass username to the script && exit 1
+
+username="$1"
+
+[[ "$(cat /etc/passwd | cut -d':' -f1 | grep ^"$username"$ | wc -l)" -eq 0 ]] && echo No such user && exit 2
+
+while :
+do
+    [[ "$(who | cut -d' ' -f1 | grep ^"$username"$ | wc -l)" -gt 0 ]] && banner User "$username" is here && exit 0
+    sleep 20
+done
+

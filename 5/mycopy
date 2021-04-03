@@ -1,0 +1,28 @@
+#!/bin/bash
+# task 5.24
+
+for i
+do
+    [ "$i" = usage ] && cat << EOF && exit 1
+$0 SOURCE DESTINATION [ append ]
+    SOURCE - some regular file
+    DESTINATION - some unexisting file or existing regular file
+    append - append content of SOURCE to DESTINATION if DESTINATION exists
+             by default, the previous content of DESTINATION is overwritten
+EOF
+done
+
+_source="${$1/#~/$HOME}"
+_destination="${$2/#~/$HOME}"
+[[ "$3" = append ]] && append=true || append=false
+
+[[ ! ( -e "$_source" ) ]] && echo File "$_source" does not exists && exit 2
+
+[[ ! ( -f "$_source" ) ]] && echo File "$_source" is not a regular file && exit 3
+
+[[ ! ( -e "$_destination" ) ]] && cat "$_source" > "$_destination" && exit 0
+
+[[ ! ( -f "$_destination" ) ]] && echo "$_destination" is not a regular file && exit 4
+
+[[ $append = true ]] && cat "$_source" >> "$_destination" || cat "$_source" > "$_destination"
+
